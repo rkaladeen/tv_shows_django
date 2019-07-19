@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import Show
-from time import strftime 
+from time import strftime, strptime
+from datetime import datetime
+from django.contrib import messages
 
 def index(request):
   return redirect("/shows/")
@@ -16,15 +18,23 @@ def new(request):
   # add_show.html PROCESS
 def add_show(request):
   # Add CREATE functions here
-  Show.objects.create(
-                      title=request.POST['title'], 
-                      network=request.POST['network'], 
-                      release=request.POST['rdate'], 
-                      desc=request.POST['desc']
-                      )
+  errors = Show.objects.basic_validator(request.POST)
 
-  last_show_added = Show.objects.last()
-  sh_id = last_show_added.id
+  if len(errors) > 0:
+    for key, value in errors.items():
+      messages.error(request, value)
+    return redirect("/shows/new/")
+  else:
+    # selected_date = datetime.strptime(request.POST['rdate'], "%b %d, %Y" )
+    Show.objects.create(
+                        title=request.POST['title'], 
+                        network=request.POST['network'], 
+                        release=request.POST['rdate'], 
+                        desc=request.POST['desc']
+                        )
+
+    last_show_added = Show.objects.last()
+    sh_id = last_show_added.id
   return redirect(f"/shows/{sh_id}/") # Redirects to show_details.html
 
   # edit_show.html RENDER
@@ -35,17 +45,21 @@ def edit(request, sh_id):
   # edit_show.html PROCESS
 def edit_show(request, sh_id):
   # Add UPDATE functions here
-  show_to_edit = Show.objects.get(id=sh_id)
+  errors = Show.objects.basic_validator(request.POST)
 
-  show_to_edit.title = request.POST['title'] 
-  show_to_edit.network = request.POST['network']
-  show_to_edit.release = request.POST['rdate'] 
-  show_to_edit.desc = request.POST['desc']
+  if len(errors) > 0:
+    for key, value in errors.items():
+      messages.error(request, value)
+    return redirect(f"/shows/{sh_id}/edit/")
+  else:
+    show_to_edit = Show.objects.get(id=sh_id)
+    show_to_edit.title = request.POST['title'] 
+    show_to_edit.network = request.POST['network']
+    show_to_edit.release = request.POST['rdate'] 
+    show_to_edit.desc = request.POST['desc']
+    show_to_edit.save()
+  return redirect(f"/shows/{sh_id}/")
   
-
-  show_to_edit.save()
-
-  return redirect(f"/shows/{sh_id}")
 
 def show(request, sh_id):
   context = { "show" : Show.objects.get(id=sh_id) }

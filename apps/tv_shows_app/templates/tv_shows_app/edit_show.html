@@ -46,7 +46,13 @@
       <input class="btn btn-primary text-center" type="submit" value="Update">
     </form>
     <a class="btn btn-secondary mt-2" href="/shows/{{edit_detail.id}}/">Go to Show</a>
-
+    <div class="validation">
+      {% if messages %}
+        {% for message in messages %}
+        <small{% if message.tags %} class="{{ message.tags }} d-block"{% endif %}>{{ message }}</small>
+        {% endfor %}
+      {% endif %}
+    </div>
   </div> <!--END OF CONTAINER-->
 </body>
 </html>
