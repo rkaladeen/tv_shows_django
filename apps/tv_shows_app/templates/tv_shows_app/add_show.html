@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/e2cd4330ca.js"></script>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'tv_shows_app/css/style.css' %}">    
+  <script src="{% static 'tv_shows_app/js/scripts.js' %}"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="jumbotron">
+      <h1 class="float-left">Add a New Show</h1>
+      <a class="fas fa-home fa-3x d-inline float-right" href='/shows'></a>
+    </div>
+
+    <form action="/shows/new/add-show/" method="POST">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" id="title" value="" name="title">
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="network">Network</label>
+          <input type="text" class="form-control" id="network" value="" name="network">
+        </div>
+        <div class="col-md-6">
+          <label for="rdate">Release Date</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text"><i class="far fa-calendar-alt fa-2x"></i></div>
+            </div>
+            <input type="date" class="form-control col-md-11" id="rdate" value="" name="rdate">
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="desc">Description</label>
+        <textarea class="form-control" id="desc" rows="3" name="desc"></textarea>
+      </div>
+      <input class="btn btn-primary text-center" type="submit" value="Create">
+    </form>
+
+  </div> <!--END OF CONTAINER-->
+</body>
+</html>

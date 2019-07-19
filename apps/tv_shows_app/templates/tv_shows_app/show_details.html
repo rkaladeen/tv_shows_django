@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/e2cd4330ca.js"></script>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'tv_shows_app/css/style.css' %}">    
+  <script src="{% static 'tv_shows_app/js/scripts.js' %}"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="jumbotron">
+      <h1 class="float-left">TV Show {{show.id}}</h1>
+      <a class="fas fa-home fa-3x d-inline float-right" href='/shows'></a>
+    </div>
+
+    <p>Title: {{show.title}}</p>
+    <p>Network: {{show.network}}</p>
+    <p>Release Date: {{show.release}}</p>
+    <p>Description: {{show.desc}}</p>
+    <p class="mt-5">Last Updated: {{show.updated_at}}</p>
+    <a class='d-inline btn btn-sm btn-secondary' href='/shows/{{show.id}}/edit/'>Edit</a>
+    <a class='d-inline btn btn-sm btn-danger' href='/shows/{{show.id}}/delete/'>Delete</a>
+  </div>
+</body>
+</html>

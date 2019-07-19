@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'tv_shows_app/css/style.css' %}">    
+  <script src="{% static 'tv_shows_app/js/scripts.js' %}"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="jumbotron">
+      <h1>All Shows</h1>
+    </div>
+    <div class="table-container w-75 mx-auto">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Title</th>
+            <th scope="col">Network</th>
+            <th scope="col">Release Date</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for show in all_shows %}
+          <tr>
+            <th scope="row">{{show.id}}</th>
+            <td>{{show.title}}</td>
+            <td>{{show.network}}</td>
+            <td>{{show.release}}</td>
+            <td>
+              <a class='d-inline btn btn-sm btn-outline-primary' href='/shows/{{show.id}}/'>Show</a>
+              <p class='d-inline'></p>
+              <a class='d-inline btn btn-sm btn-outline-secondary' href='/shows/{{show.id}}/edit/'>Edit</a>
+              <p class='d-inline'></p>
+              <a class='d-inline btn btn-sm btn-outline-danger' href='/shows/{{show.id}}/delete/'>Delete</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <a class='btn btn-success mt-3' href='new/'>Add a New Show</a>
+    </div> <!--END OF TABLE-CONTAINER-->
+  </div> <!--END OF CONTAINER-->
+</body>
+</html>
